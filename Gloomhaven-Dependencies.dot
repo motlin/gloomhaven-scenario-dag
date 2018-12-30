@@ -1,170 +1,211 @@
 digraph
 {
 	// Set up the Gloomhaven font Pirata One (Needs PirataOne-Gloomhaven.ttf installed from the Creator Pack)
-	graph [fontname = "Pirata One"];
-	node [fontname = "Pirata One", penwidth = 2, shape = box];
-	edge [fontname = "Pirata One", penwidth = 2];
+	graph [fontname = "Pirata One", fontsize = 24, penwidth = 5, bgcolor="transparent"];
+	node  [fontname = "Pirata One", fontsize = 24, penwidth = 5, style="rounded,filled" gradientangle="270" ];
+	edge  [fontname = "Pirata One", fontsize = 24, penwidth = 5];
+
+	nodesep = 0.75;
+	ranksep = 0.25;
+
+	subgraph cluster_main
+	{
+		label = "Gloomhaven Scenarios";
+		pencolor = transparent;
+
+		// Scenario nodes
+		{
+			node [fillcolor="#111111:#777777" color="#333333" fontcolor="#BBBBBB"];
+			 1 [label = "☑️  #1: Black Barrow"];
+			 2 [label = "☑️  #2: Barrow Lair"];
+			 3 [label = "☑️  #3: Inox Encampment"];
+			 4 [label = "☑️  #4: Crypt of the Damned"];
+			 5 [label = "☑️  #5: Ruinous Crypt"];
+			 6 [label = "☑️  #6: Decaying Crypt"];
+			 7 [label = "☑️  #7: Vibrant Grotto"];
+			 8 [label = "☑️  #8: Gloomhaven Warehouse 🌇"];
+			13 [label = "☑️  #13: Temple of the Seer"];
+			14 [label = "☑️  #14: Frozen Hollow"];
+			19 [label = "☑️  #19: Forgotten Crypt"];
+			20 [label = "☑️  #20: Necromancer's Sanctum"];
+			52 [label = "☑️  #52: Noxious Cellar 🌇"];
+			53 [label = "☑️  #53: Crypt Basement"];
+			54 [label = "☑️  #54: Palace of Ice"];
+			65 [label = "☑️  #65: Sulfer Mine"];
+			70 [label = "☑️  #70: Chained Isle 🌇"];
+		}
+
+		{
+			node [fillcolor="#004400:#2D882D" color="#116611" fontcolor="#88CC88"];
+			10 [label = "🔲 #10: Plane of Elemental Power"];
+			16 [label = "🔲 #16: Mountain Pass"];
+			17 [label = "🔲 #17: Lost Island"];
+			18 [label = "🔲 #18: Abandoned Sewers 🌇"];
+			27 [label = "🔲 #27: Ruinous Rift"];
+			28 [label = "🔲 #28: Outer Ritual Chamber"];
+			93 [label = "🔲 #93: Sunken Vessel 🌇"];
+		}
+
+		{
+			node [fillcolor="#550000:#AA3939" color="#801515" fontcolor="#D46A6A"];
+			9 [label = "🔒 #9: Diamond Mine"];
+		}
+
+		{
+			node [fillcolor="#004400:#2D882D" color="#801515" fontcolor="#88CC88"];
+			15 [label = "🔒 #15: Shrine of Strength"];
+			24 [label = "🔒 #24"];
+			29 [label = "🔒 #29"];
+			31 [label = "🔒 #31"];
+			43 [label = "🔒 #43"];
+		}
+
+		{
+			// Achievement Nodes
+			// Gold border
+			node [shape = invhouse, color="#FFC500"];
+
+			{
+				node [fillcolor="gray"];
+				// Party achievement nodes
+				party_first_steps           [label = "☑️  Party: First Steps"];
+				party_jekserahs_plans       [label = "☑️  Party: Jekserah’s Plans"];
+				party_dark_bounty           [label = "☑️  Party: Dark Bounty"];
+				party_stonebreakers_censer  [label = "☑️  Party: Stonebreaker's Censer"];
+				party_map_to_treasure       [label = "☑️  Party: A Map to Treasure"];
+			}
+
+			// Global achievement nodes
+			{
+				node [fillcolor="#004400:#2D882D" fontcolor="#88CC88"];
+				global_merchant_flees       [label = "✅ Global: The Merchant Flees"];
+				global_power_of_enhancement [label = "✅ Global: The Power of Enhancement"];
+			}
+			{
+				node [fillcolor="#550000:#AA3939" fontcolor="#D46A6A"];
+				global_dead_inside          [label = "❌ Global: The Dead Invade"];
+				global_rift_neutralized     [label = "❌ Global: The Rift Neutralized"];
+				global_artifact_lost        [label = "❌ Global: Artifact Lost"];
+			}
+
+			{
+				node [fillcolor="gray"];
+				quest_seeker_of_xorn        [label = "🖋️ “Seeker of Xorn” personal quest"];
+			}
+		}
+
+		{rank = source 1}
+		// {rank = max 54 65 70 93}
+
+		// Scenario unlocks
+		                                1 -> {/* 2, */ party_first_steps};
+		party_first_steps           ->  2 -> {3, 4};
+		                                3 -> {8, 9, party_jekserahs_plans};
+		                                4 -> {5, 6};
+		                                5 -> {/* 10, */ 14, 19};
+		                                6 -> {8, party_jekserahs_plans, party_dark_bounty};
+		                                7 -> {20};
+		party_jekserahs_plans       ->  8 -> {7, 13, 14};
+		                               19 -> {27, party_stonebreakers_censer};
+		                               20 -> {16, 18, 28};
+		party_stonebreakers_censer  -> 27
+		party_dark_bounty           -> 28
+		quest_seeker_of_xorn        -> 52 -> {53}
+		                               53 -> {54}
+		party_map_to_treasure       -> 93
+
+		subgraph OptionsChosen
+		{
+			edge [color = "#2D882D"   label = "chosen"];
+
+		                               13 -> {17};
+		}
+
+		subgraph OptionsNotChosen
+		{
+			edge [color = "#D46A6A"   label = "not chosen" style = dashed, penwidth = 2];
+
+		                               13 -> {15, 20};
+		}
+
+		// Global achievement requirements
+		subgraph GlobalAchievements
+		{
+			// Incomplete at the time
+			subgraph IncompleteGlobalAchievements
+			{
+				edge [color = "#D46A6A"   label = "❌" style = dashed, penwidth = 2];
+
+				global_merchant_flees       ->  3;
+				global_dead_inside          ->  8;
+				global_rift_neutralized     -> 10;
+				global_artifact_lost        -> 27;
+			}
+
+			subgraph BlockedGlobalAchievementUnlocks
+			{
+				edge [color = "red"   label = "❌", penwidth = 8];
+
+				global_merchant_flees       ->  9;
+			}
+
+			subgraph BlockedGlobalAchievementRequirements
+			{
+				edge [label = "🔒" style = dashed];
+
+				9                           -> global_dead_inside;
+			}
+
+			subgraph CompleteGlobalAchievements
+			{
+				edge [color = "#2D882D" label = "✅"];
+
+				 8 -> global_merchant_flees       -> {7, 20};
+				14 -> global_power_of_enhancement -> {7, 19, 31, 43};
+			}
+		}
+
+		// Scenario links (physical connections)
+		subgraph ScenarioLinks
+		{
+			edge [dir = none, color = "gray20:gray66:gray20", penwidth = 2];
+
+			1 ->  2;
+			5 -> 10;
+			16 -> 24;
+			28 -> 29;
+		}
+	}
 
 	subgraph cluster_legend
 	{
 		label = "Legend";
-		shape = rectangle;
-		color = black;
+		pencolor = transparent;
 
-		// mindist=0.1;
-		// ranksep=0.1;
-		// nodesep=0.1;
+		linked     [label = "Linked to Gloomhaven 🌇"];
 
-		rankdir = LR;
-		{rank=min; linked incomplete completed blocked}
-		{rank=max; label_linked label_incomplete label_completed label_blocked}
-
-		linked     [label = "🔲 #00: Scenario 🌇"  penwidth = 5];
-		incomplete [label = "🔲 #00: Scenario"     penwidth = 5];
-		completed  [label = "☑️  #00: Scenario"     style = filled, fillcolor = gray];
-		blocked    [label = "🔒 #00: Scenario"     style = dashed];
-
-		node [shape = plaintext, fillcolor = transparent];
-		label_linked     [label = "Linked to Gloomhaven"];
-		label_incomplete [label = "Incomplete"];
-		label_completed  [label = "Completed"];
-		label_blocked    [label = "Blocked"];
-
-		edge [style = invis, weight = 10];
-		linked     -> label_linked;
-		incomplete -> label_incomplete;
-		completed  -> label_completed;
-		blocked    -> label_blocked;
-	}
-
-	// Scenario nodes
-	 1 [label = "☑️  #1: Black Barrow"              style = filled, fillcolor = gray];
-	 2 [label = "☑️  #2: Barrow Lair"               style = filled, fillcolor = gray];
-	 3 [label = "☑️  #3: Inox Encampment"           style = filled, fillcolor = gray];
-	 4 [label = "☑️  #4: Crypt of the Damned"       style = filled, fillcolor = gray];
-	 5 [label = "☑️  #5: Ruinous Crypt"             style = filled, fillcolor = gray];
-	 6 [label = "☑️  #6: Decaying Crypt"            style = filled, fillcolor = gray];
-	 7 [label = "☑️  #7: Vibrant Grotto"            style = filled, fillcolor = gray];
-	 8 [label = "☑️  #8: Gloomhaven Warehouse 🌇"   style = filled, fillcolor = gray];
-	 9 [label = "🔒 #9: Diamond Mine",             style = dashed];
-	10 [label = "🔲 #10: Plane of Elemental Power" penwidth = 5];
-	13 [label = "☑️  #13: Temple of the Seer"       style = filled, fillcolor = gray];
-	14 [label = "☑️  #14: Frozen Hollow"            style = filled, fillcolor = gray];
-	15 [label = "🔲 #15: Shrine of Strength"       penwidth = 5];
-	16 [label = "🔲 #16: Mountain Pass"            penwidth = 5];
-	17 [label = "🔲 #17: Lost Island"              penwidth = 5];
-	18 [label = "🔲 #18: Abandoned Sewers 🌇"      penwidth = 5];
-	19 [label = "☑️  #19: Forgotten Crypt"          style = filled, fillcolor = gray];
-	20 [label = "☑️  #20: Necromancer's Sanctum"    style = filled, fillcolor = gray];
-	24 [label = "🔒 #24"                           style = filled, fillcolor = gray];
-	27 [label = "🔲 #27: Ruinous Rift"             penwidth = 5];
-	28 [label = "🔲 #28: Outer Ritual Chamber"     penwidth = 5];
-	29 [label = "🔒 #29"                           style = filled, fillcolor = gray];
-	31 [label = "🔒 #31"                           style = filled, fillcolor = gray];
-	43 [label = "🔒 #43"                           style = filled, fillcolor = gray];
-	52 [label = "☑️  #52: Noxious Cellar 🌇"        style = filled, fillcolor = gray];
-	53 [label = "☑️  #53: Crypt Basement"           style = filled, fillcolor = gray];
-	54 [label = "🔲 #54: Palace of Ice"            penwidth = 5];
-	65 [label = "☑️  #65: Sulfer Mine"              style = filled, fillcolor = gray];
-	70 [label = "☑️  #70: Chained Isle 🌇"          style = filled, fillcolor = gray];
-	93 [label = "🔲 #93: Sunken Vessel 🌇"         penwidth = 5];
-
-	// Party achivement nodes
-	party_first_steps           [shape = invhouse,      label = "☑️  Party: First Steps"];
-	party_jekserahs_plans       [shape = invhouse,      label = "☑️  Party: Jekserah’s Plans"];
-	party_dark_bounty           [shape = invhouse,      label = "☑️  Party: Dark Bounty"];
-	party_stonebreakers_censer  [shape = invhouse,      label = "☑️  Party: Stonebreaker's Censer"];
-	party_map_to_treasure       [shape = invhouse,      label = "☑️  Party: A Map to Treasure"];
-
-	// Global achievement nodes
-	global_merchant_flees       [shape = parallelogram, label = "✅ Global: The Merchant Flees"];
-	global_power_of_enhancement [shape = parallelogram, label = "✅ Global: The Power of Enhancement"];
-	global_dead_inside          [shape = parallelogram, label = "❌ Global: The Dead Invade"];
-	global_rift_neutralized     [shape = parallelogram, label = "❌ Global: The Rift Neutralized"];
-	global_artifact_lost        [shape = parallelogram, label = "❌ Global: Artifact Lost"];
-
-	quest_seeker_of_xorn        [shape = parallelogram, label = "🖋️ “Seeker of Xorn” personal quest"];
-
-	{rank = same 3 4}
-	{rank = same 9 13 14}
-
-	// Scenario unlocks
-	                                1 -> {2, party_first_steps};
-	party_first_steps           ->  2 -> {3, 4};
-	                                3 -> {8, 9, party_jekserahs_plans};
-	                                4 -> {5, 6};
-	                                5 -> {10, 14, 19};
-	                                6 -> {8, party_jekserahs_plans, party_dark_bounty};
-	                                7 -> {20};
-	party_jekserahs_plans       ->  8 -> {7, 13, 14};
-	                               19 -> {27, party_stonebreakers_censer};
-	                               20 -> {16, 18, 28};
-	party_stonebreakers_censer  -> 27
-	party_dark_bounty           -> 28
-	quest_seeker_of_xorn        -> 52 -> {53}
-	                               53 -> {54}
-	party_map_to_treasure       -> 93
-
-	subgraph OptionsChosen
-	{
-		edge [color = "green"   label = "chosen"];
-
-	                               13 -> {17};
-	}
-
-	subgraph OptionsNotChosen
-	{
-		edge [color = "red"   label = "not chosen" style = dashed];
-
-	                               13 -> {15, 20};
-	}
-
-	// Global achievement requirements
-	subgraph GlobalAchievements
-	{
-		// Incomplete at the time
-		subgraph IncompleteGlobalAchievements
+		subgraph cluster_basic
 		{
-			edge [color = "red"   label = "❌" style = dashed];
-
-			global_merchant_flees       ->  3;
-			global_dead_inside          ->  8;
-			global_rift_neutralized     -> 10;
-			global_artifact_lost        -> 27;
+		completed  [fillcolor="#111111:#777777" color="#333333" fontcolor="#BBBBBB" label = "☑️  Completed"];
+		incomplete [fillcolor="#004400:#2D882D" color="#116611" fontcolor="#88CC88" label = "🔲 Incomplete"];
+		blocked    [fillcolor="#550000:#AA3939" color="#801515" fontcolor="#D46A6A" label = "🔒 Blocked"];
+		locked     [fillcolor="#004400:#2D882D" color="#801515" fontcolor="#88CC88" label = "🔒 Locked"];
 		}
 
-		subgraph BlockedGlobalAchievementUnlocks
-		{
-			edge [color = "red"   label = "❌"];
+		node [shape = invhouse, color="#FFC500"];
+		node [fillcolor="gray"];
+		party_achievement [label = "☑️  Party Achievement"];
+		node [fillcolor="#004400:#2D882D" fontcolor="#88CC88"];
+		global_complete   [label = "✅ Global: Complete"];
+		node [fillcolor="#550000:#AA3939" fontcolor="#D46A6A"];
+		global_incomplete [label = "❌ Global: Incomplete"];
 
-			global_merchant_flees       ->  9;
-		}
-
-		subgraph BlockedGlobalAchievementRequirements
-		{
-			edge [label = "🔒" style = dashed];
-
-			9                           -> global_dead_inside;
-		}
-
-		subgraph CompleteGlobalAchievements
-		{
-			edge [color = "green" label = "✅"];
-
-			 8 -> global_merchant_flees       -> {7, 20};
-			14 -> global_power_of_enhancement -> {7, 19, 31, 43};
-		}
+		linked1     [label = "Linked 1"];
+		linked2     [label = "Linked 2"];
+		edge [dir = none, color = "gray20:gray66:gray20", penwidth = 2];
+		linked1 -> linked2;
 	}
 
-	// Scenario links (physical connections)
-	subgraph ScenarioLinks
-	{
-		edge [dir = none, color = "gray20:gray66:gray20"];
-
-		1 ->  2;
-		5 -> 10;
-		16 -> 24;
-		28 -> 29;
-	}
+	{24, 29} -> completed [style = invis, weight = 0.1];
 }
 
