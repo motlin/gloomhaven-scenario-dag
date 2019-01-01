@@ -1,8 +1,8 @@
 digraph
 {
 	// Set up the Gloomhaven font Pirata One (Needs PirataOne-Gloomhaven.ttf installed from the Creator Pack)
-	graph [fontname = "Pirata One", fontsize = 24, penwidth = 5, bgcolor="transparent"];
-	node  [fontname = "Pirata One", fontsize = 24, penwidth = 5, style="rounded,filled" gradientangle="270" ];
+	graph [fontname = "Pirata One", fontsize = 24, penwidth = 5, bgcolor="#DCCDC3:#B4A096" gradientangle="270"];
+	node  [fontname = "Pirata One", fontsize = 24, penwidth = 5, style="rounded,filled" gradientangle="270"];
 	edge  [fontname = "Pirata One", fontsize = 24, penwidth = 5];
 
 	nodesep = 0.75;
@@ -36,7 +36,7 @@ digraph
 		}
 
 		{
-			node [fillcolor="#004400:#2D882D" color="#116611" fontcolor="#88CC88"];
+			node [fillcolor="gray"];
 			10 [label = "🔲 #10: Plane of Elemental Power"];
 			16 [label = "🔲 #16: Mountain Pass"];
 			17 [label = "🔲 #17: Lost Island"];
@@ -52,7 +52,7 @@ digraph
 		}
 
 		{
-			node [fillcolor="#004400:#2D882D" color="#801515" fontcolor="#88CC88"];
+			node [fillcolor="gray" color="#801515"];
 			15 [label = "🔒 #15: Shrine of Strength"];
 			24 [label = "🔒 #24"];
 			29 [label = "🔒 #29"];
@@ -66,7 +66,7 @@ digraph
 			node [shape = invhouse, color="#FFC500"];
 
 			{
-				node [fillcolor="gray"];
+				node [fillcolor="#111111:#777777" fontcolor="#BBBBBB"];
 				// Party achievement nodes
 				party_first_steps           [label = "☑️  Party: First Steps"];
 				party_jekserahs_plans       [label = "☑️  Party: Jekserah’s Plans"];
@@ -89,7 +89,7 @@ digraph
 			}
 
 			{
-				node [fillcolor="gray"];
+				node [fillcolor="#111111:#777777" fontcolor="#BBBBBB"];
 				quest_seeker_of_xorn        [label = "🖋️ “Seeker of Xorn” personal quest"];
 			}
 		}
@@ -180,30 +180,35 @@ digraph
 	subgraph cluster_legend
 	{
 		label = "Legend";
-		pencolor = transparent;
+		pencolor = black;
 
 		linked     [label = "Linked to Gloomhaven 🌇"];
 
 		subgraph cluster_basic
 		{
-		completed  [fillcolor="#111111:#777777" color="#333333" fontcolor="#BBBBBB" label = "☑️  Completed"];
-		incomplete [fillcolor="#004400:#2D882D" color="#116611" fontcolor="#88CC88" label = "🔲 Incomplete"];
-		blocked    [fillcolor="#550000:#AA3939" color="#801515" fontcolor="#D46A6A" label = "🔒 Blocked"];
-		locked     [fillcolor="#004400:#2D882D" color="#801515" fontcolor="#88CC88" label = "🔒 Locked"];
+			pencolor = transparent;
+			label = "";
+			incomplete [fillcolor="gray" label = "🔲 Incomplete"];
+			completed  [fillcolor="#111111:#777777" color="#333333" fontcolor="#BBBBBB" label = "☑️  Completed"];
+			blocked    [fillcolor="#550000:#AA3939" color="#801515" fontcolor="#D46A6A" label = "🔒 Blocked"];
+			locked     [fillcolor="gray" color="#801515" label = "🔒 Locked"];
 		}
 
-		node [shape = invhouse, color="#FFC500"];
-		node [fillcolor="gray"];
-		party_achievement [label = "☑️  Party Achievement"];
-		node [fillcolor="#004400:#2D882D" fontcolor="#88CC88"];
-		global_complete   [label = "✅ Global: Complete"];
-		node [fillcolor="#550000:#AA3939" fontcolor="#D46A6A"];
-		global_incomplete [label = "❌ Global: Incomplete"];
+		subgraph cluster_achievement
+		{
+			pencolor = transparent;
+			label = "";
+			node [shape = invhouse, color="#FFC500"];
+			party_achievement [label = "☑️  Party Achievement", fillcolor="#111111:#777777" fontcolor="#BBBBBB"];
+			global_complete   [label = "✅ Global: Complete" fillcolor="#004400:#2D882D" fontcolor="#88CC88"];
+			global_incomplete [label = "❌ Global: Incomplete" fillcolor="#550000:#AA3939" fontcolor="#D46A6A"];
+		}
+
+		completed -> party_achievement [style = invis];
 
 		linked1     [label = "Linked 1"];
 		linked2     [label = "Linked 2"];
-		edge [dir = none, color = "gray20:gray66:gray20", penwidth = 2];
-		linked1 -> linked2;
+		linked1 -> linked2 [dir = none, color = "gray20:gray66:gray20", penwidth = 2];
 	}
 
 	{24, 29} -> completed [style = invis, weight = 0.1];
