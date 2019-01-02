@@ -41,6 +41,8 @@ digraph
 			16 [label = "🔲 #16: Mountain Pass"];
 			17 [label = "🔲 #17: Lost Island"];
 			18 [label = "🔲 #18: Abandoned Sewers 🌇"];
+			21 [label = "🔲 #21: Infernal Throne 🌇"];
+			22 [label = "🔲 #22: Temple of the Elements 🌇"];
 			27 [label = "🔲 #27: Ruinous Rift"];
 			28 [label = "🔲 #28: Outer Ritual Chamber"];
 			93 [label = "🔲 #93: Sunken Vessel 🌇"];
@@ -73,6 +75,8 @@ digraph
 				party_dark_bounty           [label = "☑️  Party: Dark Bounty"];
 				party_stonebreakers_censer  [label = "☑️  Party: Stonebreaker's Censer"];
 				party_map_to_treasure       [label = "☑️  Party: A Map to Treasure"];
+				party_demons_errand         [label = "☑️  Party: A Demon's Errand"];
+				party_following_clues       [label = "☑️  Party: Following Clues"];
 			}
 
 			// Global achievement nodes
@@ -106,8 +110,10 @@ digraph
 		                                6 -> {8, party_jekserahs_plans, party_dark_bounty};
 		                                7 -> {20};
 		party_jekserahs_plans       ->  8 -> {7, 13, 14};
+		                               10 -> {21, 22, party_demons_errand};
 		                               19 -> {27, party_stonebreakers_censer};
 		                               20 -> {16, 18, 28};
+		{party_demons_errand, party_following_clues} -> 22 [label = "Either party achievement"];
 		party_stonebreakers_censer  -> 27
 		party_dark_bounty           -> 28
 		quest_seeker_of_xorn        -> 52 -> {53}
@@ -138,7 +144,7 @@ digraph
 
 				global_merchant_flees       ->  3;
 				global_dead_inside          ->  8;
-				global_rift_neutralized     -> 10;
+				global_rift_neutralized     -> {10, 21};
 				global_artifact_lost        -> 27;
 			}
 
