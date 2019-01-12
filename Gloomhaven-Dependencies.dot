@@ -13,6 +13,23 @@ digraph
 		label = "Gloomhaven Scenarios";
 		pencolor = transparent;
 
+		// Prosperity nodes
+		{
+			// Gold border
+			node [color="#FFC500" fillcolor="#111111:#777777" fontcolor="#BBBBBB"];
+			p1 [label = "☑️  Prosperity 1"];
+			p2 [label = "☑️  Prosperity 2"];
+			p3 [label = "☑️  Prosperity 3"];
+			p4 [label = "☑️  Prosperity 4"];
+			retire_sw [label = "☑️  Spellweaver Retired"];
+			node [fillcolor="gray" fontcolor="black"];
+			p5 [label = "🔲 #Prosperity 5"];
+			p6 [label = "🔲 #Prosperity 6"];
+			p7 [label = "🔲 #Prosperity 7"];
+			p8 [label = "🔲 #Prosperity 8"];
+			p9 [label = "🔲 #Prosperity 9"];
+		}
+
 		// Scenario nodes
 		{
 			node [fillcolor="#111111:#777777" color="#333333" fontcolor="#BBBBBB"];
@@ -24,28 +41,34 @@ digraph
 			 6 [label = "☑️  #6: Decaying Crypt"];
 			 7 [label = "☑️  #7: Vibrant Grotto"];
 			 8 [label = "☑️  #8: Gloomhaven Warehouse 🌇"];
+			10 [label = "☑️  #10: Plane of Elemental Power"];
 			13 [label = "☑️  #13: Temple of the Seer"];
 			14 [label = "☑️  #14: Frozen Hollow"];
+			17 [label = "☑️  #17: Lost Island"];
 			19 [label = "☑️  #19: Forgotten Crypt"];
 			20 [label = "☑️  #20: Necromancer's Sanctum"];
+			21 [label = "☑️  #21: Infernal Throne 🌇"];
+			27 [label = "☑️  #27: Ruinous Rift"];
+			28 [label = "☑️  #28: Outer Ritual Chamber"];
+			29 [label = "☑️  #29: Sanctuary of Gloom"];
 			52 [label = "☑️  #52: Noxious Cellar 🌇"];
 			53 [label = "☑️  #53: Crypt Basement"];
 			54 [label = "☑️  #54: Palace of Ice"];
 			65 [label = "☑️  #65: Sulfer Mine"];
 			70 [label = "☑️  #70: Chained Isle 🌇"];
+			93 [label = "☑️  #93: Sunken Vessel 🌇"];
 		}
 
 		{
 			node [fillcolor="gray"];
-			10 [label = "🔲 #10: Plane of Elemental Power"];
 			16 [label = "🔲 #16: Mountain Pass"];
-			17 [label = "🔲 #17: Lost Island"];
 			18 [label = "🔲 #18: Abandoned Sewers 🌇"];
-			21 [label = "🔲 #21: Infernal Throne 🌇"];
 			22 [label = "🔲 #22: Temple of the Elements 🌇"];
-			27 [label = "🔲 #27: Ruinous Rift"];
-			28 [label = "🔲 #28: Outer Ritual Chamber"];
-			93 [label = "🔲 #93: Sunken Vessel 🌇"];
+			69 [label = "🔲 #69: Well of the Unfortunate"];
+			72 [label = "🔲 #72: Oozing Grove"];
+			79 [label = "🔲 #79: Lost Temple"];
+			90 [label = "🔲 #90: Demonic Rift"];
+			94 [label = "🔲 #94: Vermling Nest"];
 		}
 
 		{
@@ -57,7 +80,6 @@ digraph
 			node [fillcolor="gray" color="#801515"];
 			15 [label = "🔒 #15: Shrine of Strength"];
 			24 [label = "🔒 #24"];
-			29 [label = "🔒 #29"];
 			31 [label = "🔒 #31"];
 			43 [label = "🔒 #43"];
 		}
@@ -76,7 +98,10 @@ digraph
 				party_stonebreakers_censer  [label = "☑️  Party: Stonebreaker's Censer"];
 				party_map_to_treasure       [label = "☑️  Party: A Map to Treasure"];
 				party_demons_errand         [label = "☑️  Party: A Demon's Errand"];
-				party_following_clues       [label = "☑️  Party: Following Clues"];
+				party_an_invitation         [label = "☑️  Party: An Invitation"];
+				party_fish_aid              [label = "☑️  Party: Fish's Aid"];
+				node [fillcolor="gray" fontcolor="black"];
+				party_following_clues       [label = "🔲 Party: Following Clues"];
 			}
 
 			// Global achievement nodes
@@ -84,12 +109,13 @@ digraph
 				node [fillcolor="#004400:#2D882D" fontcolor="#88CC88"];
 				global_merchant_flees       [label = "✅ Global: The Merchant Flees"];
 				global_power_of_enhancement [label = "✅ Global: The Power of Enhancement"];
+				global_rift_neutralized     [label = "✅ Global: The Rift Neutralized"];
 			}
 			{
 				node [fillcolor="#550000:#AA3939" fontcolor="#D46A6A"];
 				global_dead_inside          [label = "❌ Global: The Dead Invade"];
-				global_rift_neutralized     [label = "❌ Global: The Rift Neutralized"];
 				global_artifact_lost        [label = "❌ Global: Artifact Lost"];
+				global_edge_of_darkness     [label = "❌ Global: Edge of Darkness"];
 			}
 
 			{
@@ -114,11 +140,17 @@ digraph
 		                               19 -> {27, party_stonebreakers_censer};
 		                               20 -> {16, 18, 28};
 		{party_demons_errand, party_following_clues} -> 22 [label = "Either party achievement"];
-		party_stonebreakers_censer  -> 27
-		party_dark_bounty           -> 28
-		quest_seeker_of_xorn        -> 52 -> {53}
-		                               53 -> {54}
-		party_map_to_treasure       -> 93
+		party_stonebreakers_censer  -> 27;
+		party_dark_bounty           -> 28 -> {/* 29, */ party_an_invitation};
+		                               29 -> global_edge_of_darkness;
+		quest_seeker_of_xorn        -> 52 -> {53};
+		                               53 -> {54};
+		p4                          -> 72;
+		party_first_steps           -> 79;
+		retire_sw                   -> 90;
+		party_map_to_treasure       -> 93;
+
+		p1 -> p2 -> p3 -> p4 -> p5 -> p6 -> p7 -> p8 -> p9;
 
 		subgraph OptionsChosen
 		{
@@ -168,6 +200,8 @@ digraph
 
 				 8 -> global_merchant_flees       -> {7, 20};
 				14 -> global_power_of_enhancement -> {7, 19, 31, 43};
+				21 -> {global_rift_neutralized};
+				27 -> {global_rift_neutralized};
 			}
 		}
 
@@ -217,6 +251,7 @@ digraph
 		linked1 -> linked2 [dir = none, color = "gray20:gray66:gray20", penwidth = 2];
 	}
 
-	{24, 29} -> completed [style = invis, weight = 0.1];
+	// {21, 22, 24, 29} -> completed [style = invis, weight = 0.1];
+	{22} -> completed [style = invis, weight = 0.1];
 }
 
