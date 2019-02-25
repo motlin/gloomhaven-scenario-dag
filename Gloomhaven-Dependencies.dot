@@ -50,6 +50,7 @@ digraph
 			19 [label = "☑️  #19: Forgotten Crypt"];
 			20 [label = "☑️  #20: Necromancer's Sanctum"];
 			21 [label = "☑️  #21: Infernal Throne 🌇"];
+			23 [label = "☑️  #23: Deep Ruins 🌇"];
 			27 [label = "☑️  #27: Ruinous Rift"];
 			28 [label = "☑️  #28: Outer Ritual Chamber"];
 			29 [label = "☑️  #29: Sanctuary of Gloom"];
@@ -57,6 +58,7 @@ digraph
 			53 [label = "☑️  #53: Crypt Basement"];
 			54 [label = "☑️  #54: Palace of Ice"];
 			61 [label = "☑️  #61: Fading Lighthouse"];
+			62 [label = "☑️  #62: Pit of Souls"];
 			65 [label = "☑️  #65: Sulfer Mine"];
 			70 [label = "☑️  #70: Chained Isle 🌇"];
 			79 [label = "☑️  #79: Lost Temple"];
@@ -67,13 +69,12 @@ digraph
 			node [fillcolor="gray"];
 			16 [label = "🔲 #16: Mountain Pass"];
 			22 [label = "🔲 #22: Temple of the Elements 🌇"];
-			23 [label = "🔲 #23: Deep Ruins"];
 			26 [label = "🔲 #26: Ancient Cistern"];
 			43 [label = "🔲 #43: Drake Nest"];
 			61 [label = "🔲 #61: Fading Lighthouse"];
-			62 [label = "🔲 #62: Pit of Souls"];
 			69 [label = "🔲 #69: Well of the Unfortunate"];
 			72 [label = "🔲 #72: Oozing Grove"];
+			81 [label = "🔲 #81: Temple of the Eclipse"];
 			87 [label = "🔲 #87: Corrupted Cove 🌇"];
 			90 [label = "🔲 #90: Demonic Rift"];
 			94 [label = "🔲 #94: Vermling Nest"];
@@ -109,6 +110,7 @@ digraph
 				party_an_invitation         [label = "☑️  Party: An Invitation"];
 				party_fish_aid              [label = "☑️  Party: Fish's Aid"];
 				party_poisons_source        [label = "☑️  Party: The Poison's Source"];
+				party_through_ruins         [label = "☑️  Party: Through the Ruins"];
 				node [fillcolor="gray" fontcolor="black"];
 				party_following_clues       [label = "🔲 Party: Following Clues"];
 			}
@@ -125,6 +127,7 @@ digraph
 				global_dead_inside          [label = "❌ Global: The Dead Invade"];
 				global_artifact_lost        [label = "❌ Global: Artifact Lost"];
 				global_edge_of_darkness     [label = "❌ Global: Edge of Darkness"];
+				global_water_breathing     [label = "❌ Global: Water Breathing"];
 			}
 
 			{
@@ -151,6 +154,8 @@ digraph
 		                               19 -> {27, party_stonebreakers_censer};
 		                               20 -> {16, 18, 28};
 		{party_demons_errand, party_following_clues} -> 22 [label = "Either party achievement"];
+		                               23 -> {party_through_ruins}
+		{party_through_ruins, global_water_breathing} -> 26 [label = "Either/Or"];
 		party_stonebreakers_censer  -> 27;
 		party_dark_bounty           -> 28 -> {/* 29, */ party_an_invitation};
 		                               29 -> global_edge_of_darkness;
