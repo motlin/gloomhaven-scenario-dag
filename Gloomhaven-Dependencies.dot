@@ -24,6 +24,7 @@ digraph
 			p5 [label = "☑️  #Prosperity 5"];
 			retire_sw [label = "☑️  Spellweaver Retired"];
 			retire_mt [label = "☑️  Mindthief Retired"];
+			envelope_x [label = "☑️  Envelope X"];
 			node [fillcolor="gray" fontcolor="black"];
 			p6 [label = "🔲 #Prosperity 6"];
 			p7 [label = "🔲 #Prosperity 7"];
@@ -50,13 +51,18 @@ digraph
 			19 [label = "☑️  #19: Forgotten Crypt"];
 			20 [label = "☑️  #20: Necromancer's Sanctum"];
 			21 [label = "☑️  #21: Infernal Throne 🌇"];
+			22 [label = "☑️  #22: Temple of the Elements 🌇"];
 			23 [label = "☑️  #23: Deep Ruins 🌇"];
+			26 [label = "☑️  #26: Ancient Cistern"];
 			27 [label = "☑️  #27: Ruinous Rift"];
 			28 [label = "☑️  #28: Outer Ritual Chamber"];
 			29 [label = "☑️  #29: Sanctuary of Gloom"];
+			31 [label = "☑️  #31: Plane of Night 🌇"];
 			52 [label = "☑️  #52: Noxious Cellar 🌇"];
 			53 [label = "☑️  #53: Crypt Basement"];
 			54 [label = "☑️  #54: Palace of Ice"];
+			57 [label = "☑️  #57: Investigation 🌇"];
+			58 [label = "☑️  #58: Bloody Shack 🌇"];
 			61 [label = "☑️  #61: Fading Lighthouse"];
 			62 [label = "☑️  #62: Pit of Souls"];
 			65 [label = "☑️  #65: Sulfer Mine"];
@@ -68,8 +74,11 @@ digraph
 		{
 			node [fillcolor="gray"];
 			16 [label = "🔲 #16: Mountain Pass"];
-			22 [label = "🔲 #22: Temple of the Elements 🌇"];
-			26 [label = "🔲 #26: Ancient Cistern"];
+			35 [label = "🔲 #35: Gloomhaven Battlements A"];
+			36 [label = "🔲 #36: Gloomhaven Battlements B"];
+			37 [label = "🔲 #37: Doom Trench 🌇"];
+			38 [label = "🔲 #38: Slave Pens"];
+			39 [label = "🔲 #39: Treacherous Divide"];
 			43 [label = "🔲 #43: Drake Nest"];
 			61 [label = "🔲 #61: Fading Lighthouse"];
 			69 [label = "🔲 #69: Well of the Unfortunate"];
@@ -89,8 +98,6 @@ digraph
 			node [fillcolor="gray" color="#801515"];
 			15 [label = "🔒 #15: Shrine of Strength"];
 			24 [label = "🔒 #24"];
-			31 [label = "🔒 #31"];
-			43 [label = "🔒 #43"];
 		}
 
 		{
@@ -121,6 +128,9 @@ digraph
 				global_merchant_flees       [label = "✅ Global: The Merchant Flees"];
 				global_power_of_enhancement [label = "✅ Global: The Power of Enhancement"];
 				global_rift_neutralized     [label = "✅ Global: The Rift Neutralized"];
+
+				global_artifact_recovered   [label = "✅ Global: Artifact Recovered"];
+				global_artifact_cleansed    [label = "✅ Global: Artifact Cleansed"];
 			}
 			{
 				node [fillcolor="#550000:#AA3939" fontcolor="#D46A6A"];
@@ -134,6 +144,7 @@ digraph
 				node [fillcolor="#111111:#777777" fontcolor="#BBBBBB"];
 				quest_seeker_of_xorn        [label = "🖋️ “Seeker of Xorn” personal quest"];
 				quest_fall_of_man           [label = "🖋️ “Fall of Man” personal quest"];
+				quest_vengance              [label = "🖋️ “Vengance” personal quest"];
 			}
 		}
 
@@ -153,14 +164,18 @@ digraph
 									   18 -> {14, 23, 26, 43};
 		                               19 -> {27, party_stonebreakers_censer};
 		                               20 -> {16, 18, 28};
-		{party_demons_errand, party_following_clues} -> 22 [label = "Either party achievement"];
+		{party_demons_errand, party_following_clues} -> 22 -> {31, 35, 36} [label = "Either party achievement"];
 		                               23 -> {party_through_ruins}
-		{party_through_ruins, global_water_breathing} -> 26 [label = "Either/Or"];
+		{party_through_ruins}       -> 26 -> {22, party_following_clues} [label = "Either/Or"];
 		party_stonebreakers_censer  -> 27;
 		party_dark_bounty           -> 28 -> {/* 29, */ party_an_invitation};
 		                               29 -> global_edge_of_darkness;
+	                                   31 -> {37, 38, 39, 43};
+		                               43 -> {}
 		quest_seeker_of_xorn        -> 52 -> {53};
 		                               53 -> {54};
+		quest_vengance              -> 57 -> 58;
+		quest_vengance              -> 58 -> {envelope_x};
 		quest_fall_of_man           -> 61 -> {62};
 		p4                          -> 72;
 		party_first_steps           -> 79;
@@ -195,6 +210,7 @@ digraph
 				global_merchant_flees       ->  3;
 				global_dead_inside          ->  8;
 				global_rift_neutralized     -> {10, 21};
+		        global_water_breathing      -> {26, 37};
 				global_artifact_lost        -> 27;
 			}
 
@@ -220,6 +236,8 @@ digraph
 				14 -> global_power_of_enhancement -> {7, 19, 31, 43};
 				21 -> {global_rift_neutralized};
 				27 -> {global_rift_neutralized};
+				22 -> {global_artifact_recovered} -> 31;
+				31 -> {global_artifact_cleansed};
 			}
 		}
 
@@ -232,6 +250,8 @@ digraph
 			5 -> 10;
 			16 -> 24;
 			28 -> 29;
+			38 -> 44;
+			39 -> 46;
 		}
 	}
 
