@@ -58,6 +58,8 @@ digraph
 			28 [label = "☑️  #28: Outer Ritual Chamber"];
 			29 [label = "☑️  #29: Sanctuary of Gloom"];
 			31 [label = "☑️  #31: Plane of Night 🌇"];
+			37 [label = "☑️  #37: Doom Trench 🌇"];
+			43 [label = "☑️  #43: Drake Nest"];
 			52 [label = "☑️  #52: Noxious Cellar 🌇"];
 			53 [label = "☑️  #53: Crypt Basement"];
 			54 [label = "☑️  #54: Palace of Ice"];
@@ -76,13 +78,13 @@ digraph
 			16 [label = "🔲 #16: Mountain Pass"];
 			35 [label = "🔲 #35: Gloomhaven Battlements A"];
 			36 [label = "🔲 #36: Gloomhaven Battlements B"];
-			37 [label = "🔲 #37: Doom Trench 🌇"];
 			38 [label = "🔲 #38: Slave Pens"];
 			39 [label = "🔲 #39: Treacherous Divide"];
-			43 [label = "🔲 #43: Drake Nest"];
+			47 [label = "🔲 #47: Lair of the Unseeing Eye 🌇"];
 			61 [label = "🔲 #61: Fading Lighthouse"];
 			69 [label = "🔲 #69: Well of the Unfortunate"];
 			72 [label = "🔲 #72: Oozing Grove"];
+			78 [label = "🔲 #78: Sacrifice Pit"];
 			81 [label = "🔲 #81: Temple of the Eclipse"];
 			87 [label = "🔲 #87: Corrupted Cove 🌇"];
 			90 [label = "🔲 #90: Demonic Rift"];
@@ -118,6 +120,7 @@ digraph
 				party_fish_aid              [label = "☑️  Party: Fish's Aid"];
 				party_poisons_source        [label = "☑️  Party: The Poison's Source"];
 				party_through_ruins         [label = "☑️  Party: Through the Ruins"];
+				party_through_the_trench    [label = "☑️  Party: Through the Trench"];
 				node [fillcolor="gray" fontcolor="black"];
 				party_following_clues       [label = "🔲 Party: Following Clues"];
 			}
@@ -131,13 +134,13 @@ digraph
 
 				global_artifact_recovered   [label = "✅ Global: Artifact Recovered"];
 				global_artifact_cleansed    [label = "✅ Global: Artifact Cleansed"];
+				global_water_breathing      [label = "✅ Global: Water Breathing"];
 			}
 			{
 				node [fillcolor="#550000:#AA3939" fontcolor="#D46A6A"];
 				global_dead_inside          [label = "❌ Global: The Dead Invade"];
 				global_artifact_lost        [label = "❌ Global: Artifact Lost"];
 				global_edge_of_darkness     [label = "❌ Global: Edge of Darkness"];
-				global_water_breathing     [label = "❌ Global: Water Breathing"];
 			}
 
 			{
@@ -164,14 +167,17 @@ digraph
 									   18 -> {14, 23, 26, 43};
 		                               19 -> {27, party_stonebreakers_censer};
 		                               20 -> {16, 18, 28};
-		{party_demons_errand, party_following_clues} -> 22 -> {31, 35, 36} [label = "Either party achievement"];
+		{party_demons_errand, party_following_clues} -> 22 [label = "Either party achievement"];
+		                               22 -> {31, 35, 36};
 		                               23 -> {party_through_ruins}
 		{party_through_ruins}       -> 26 -> {22, party_following_clues} [label = "Either/Or"];
 		party_stonebreakers_censer  -> 27;
 		party_dark_bounty           -> 28 -> {/* 29, */ party_an_invitation};
 		                               29 -> global_edge_of_darkness;
 	                                   31 -> {37, 38, 39, 43};
+		                               37 -> {47, party_through_the_trench}
 		                               43 -> {}
+		{party_through_the_trench}  -> 47 -> {}
 		quest_seeker_of_xorn        -> 52 -> {53};
 		                               53 -> {54};
 		quest_vengance              -> 57 -> 58;
@@ -210,7 +216,6 @@ digraph
 				global_merchant_flees       ->  3;
 				global_dead_inside          ->  8;
 				global_rift_neutralized     -> {10, 21};
-		        global_water_breathing      -> {26, 37};
 				global_artifact_lost        -> 27;
 			}
 
@@ -238,6 +243,7 @@ digraph
 				27 -> {global_rift_neutralized};
 				22 -> {global_artifact_recovered} -> 31;
 				31 -> {global_artifact_cleansed};
+		        43 -> global_water_breathing      -> {26, 37};
 			}
 		}
 
